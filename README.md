@@ -1,4 +1,4 @@
-# Implementacija genetskog algoritma u programskom jeziku Python
+## Implementacija genetskog algoritma u programskom jeziku Python
 
 **1. Predlog problema:**
 Nalaženje što je moguće kraće rute izmedju dve tačke u dvodimenzionalnom prostoru. Ulazni parametri su koordinate polazne i krajnje tačke, kao i koordinate linije koja se nalazi izmedju tačaka i koju treba izbeći. Zadatak se sastoji u generisanju skupa linija (ruta) koje imaju pomenute tačke kao polazne i krajnje, a pritom linije ne seču liniju - ona predstavlja prepreku.
