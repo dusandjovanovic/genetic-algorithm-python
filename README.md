@@ -7,7 +7,7 @@ Nalaženje što je moguće kraće rute izmedju dve tačke u dvodimenzionalnom pr
 Osnovni problem je u činjenici da dvodimenzionalni prostor može da bude jako širok i da postoji veliki broj mogučih linija koje spajaju dve tačke i ispunjavaju uslov izbegavanja preprečne linije. Genetskim algoritmom se polazi od nasumično generisanog skupa linija (ruta) i napredovanjem generacija se očekuje dobijanje što je moguće efikasnijih putanja izmedju tačaka. Treba voditi računa da svaka putanja ispunjava uslov izbegavanja preprečne linije izmedju tačaka.
 
 **3. Implementacija genetskog algoritma**
-Za implementaciju algoritma se koriste samo osnovne biblioteke Python okruženja. S obzirom na složenost problema nije bilo neophodno koristiti open-source biblioteke. Predstavljanje DNA-a, kao i sve funkcije preklapanja i mutiranja su izgradjene od osnovnih biblioteka što dozvoljava veću fleksibilnost.
+Za implementaciju algoritma koriste se samo osnovne biblioteke Python okruženja. S obzirom na složenost problema nije neophodno koristiti open-source biblioteke. Predstavljanje DNA-a, kao i sve funkcije preklapanja i mutiranja su izgradjene od osnovnih biblioteka što dozvoljava veću fleksibilnost.
 
 **3.1. Parametri genetskog algoritma**
 Svi ulazni argumenti algoritma su parametrizovani.
