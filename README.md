@@ -46,18 +46,18 @@ Klasa koja sadrži opisuje potrebna ponašanja nazvana je `GeneticAlgorithm`, nj
 Na početku algoritma neophodno je oformiti nasumičnu generaciju kao polaznu tačku. U ovom koraku se parametrizuje genetski algoritam i sve vrednosti navedene na početku dokumenta su inicijalizovane vrednostima. Bitne vrednosti su na primer `dna_size` koja odredjuje dužinu hromozoma u svakoj generaciji, zatim `dna_bound` koja odredjuje granice početnih vrednosti i kasnijih mutacija svakog hromozoma.
 
 ```python
-self.pop = numpy.random.randint(*dna_bound, size = (no_chromosomes, dna_size))
+self.generation = numpy.random.randint(*dna_bound, size = (no_chromosomes, dna_size))
 ```
 
-Ovo je polazna inicijalizacija i zadužena je za formiranje prve generacije. Generacija ima `no_chromosomes` elemenata od kojih svaki predstavlja niz od `no_moves` (x,y) tačaka u prostoru koje formiraju jednu liniju. U svakom trenutku se pristupa generaciji preko atributa `self.pop`.
+Ovo je polazna inicijalizacija i zadužena je za formiranje prve generacije. Generacija ima `no_chromosomes` elemenata od kojih svaki predstavlja niz od `no_moves` (x,y) tačaka u prostoru koje formiraju jednu liniju. U svakom trenutku se pristupa generaciji preko atributa `self.generation`.
 
 ### Kodiranje hromozoma
 Hromozom se kodira sa `2 x no_moves` **pomeraja u prostoru** gde je svaki realan broj i realtivan u odnosu na prethodni pomeraj. Privh `no_moves` pomeraja je po x-osi, a isto toliko preostalih je po y-osi. Hromozom, prema tome, opisuje sve tačke koje čine jednu liniju u 2d prostoru, svaka od tačaka može i ne mora da bude skretanje linije. Neophodno je konvertovati pomeraje kojima je kodiran hromozom u stvarne tačke.
 
 ```python
-self.pop[0] = [1, 1, 0, 1, 1, 0, 0, ...] [0:512]
+self.generation[0] = [1, 1, 0, 1, 1, 0, 0, ...] [0:512]
 ...
-self.pop[99] = [0, 1, 1, 1, 1, 0, ...] [0:512]
+self.generation[99] = [0, 1, 1, 1, 1, 0, ...] [0:512]
 ```
 
 ### Iscrtavanje linija i metoda `dna_to_product`
@@ -83,23 +83,23 @@ Pomoćna metoda koja se koristi u procesu evoluiranja. Potrebno je za svaki hrom
 
 ```python
 def evolve(self, fitness):
-    pop = self.select(fitness)
-    pop_copy = pop.copy()
-    for parent in pop:
-        child = self.crossover(parent, pop_copy)
+    generation = self.select(fitness)
+    generation_copy = generation.copy()
+    for parent in generation:
+        child = self.crossover(parent, generation_copy)
         child = self.mutate(child)
         parent[:] = child
-    self.pop = pop
+    self.generation = generation
 ```
 
 ### Preklapanje jediniki i metoda `crossover`
 
 ```python
-def crossover(self, parent, pop):
+def crossover(self, parent, generation):
     if numpy.random.randint(0, self.no_chromosomes, size = 1):
-        i_ = numpy.random.randint(0, self.no_chromosomes, size = 1) # select another individual from pop
+        i_ = numpy.random.randint(0, self.no_chromosomes, size = 1) # select another individual from generation
         cross_points = numpy.random.randint(0, 2, self.dna_size).astype(numpy.bool) # choose crossover points
-        parent[cross_points] = pop[i_, cross_points] # cross and produce one child
+        parent[cross_points] = generation[i_, cross_points] # cross and produce one child
     return parent
 ```
 

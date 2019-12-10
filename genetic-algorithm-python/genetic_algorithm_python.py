@@ -23,14 +23,14 @@ class GeneticAlgorithm(object):
         self.mutation_rate = mutation_rate
         self.no_chromosomes = no_chromosomes
 
-        self.pop = numpy.random.randint(*dna_bound, size = (no_chromosomes, dna_size))
+        self.generation = numpy.random.randint(*dna_bound, size = (no_chromosomes, dna_size))
 
     def dna_to_product(self, no_moves, point_a):
-        dna = self.pop
-        pop = (dna - 0.5) / 2
-        pop[:, 0], pop[:, no_moves] = point_a[0], point_a[1]
-        lines_x = numpy.cumsum(pop[:, :no_moves], axis = 1)
-        lines_y = numpy.cumsum(pop[:, no_moves:], axis = 1)
+        dna = self.generation
+        generation = (dna - 0.5) / 2
+        generation[:, 0], generation[:, no_moves] = point_a[0], point_a[1]
+        lines_x = numpy.cumsum(generation[:, :no_moves], axis = 1)
+        lines_y = numpy.cumsum(generation[:, no_moves:], axis = 1)
         return lines_x, lines_y
 
     def get_fitness(self, lines_x, lines_y, point_b, obstacle_line):
@@ -44,13 +44,13 @@ class GeneticAlgorithm(object):
 
     def select(self, fitness):
         index = numpy.random.choice(numpy.arange(self.no_chromosomes), size = self.no_chromosomes, replace = True, p = fitness / fitness.sum())
-        return self.pop[index]
+        return self.generation[index]
 
-    def crossover(self, parent, pop):
+    def crossover(self, parent, generation):
         if numpy.random.randint(0, self.no_chromosomes, size = 1):
-            i_ = numpy.random.randint(0, self.no_chromosomes, size = 1)  # select another individual from pop
+            i_ = numpy.random.randint(0, self.no_chromosomes, size = 1)  # select another individual from generation
             cross_points = numpy.random.randint(0, 2, self.dna_size).astype(numpy.bool)  # choose crossover points
-            parent[cross_points] = pop[i_, cross_points] # cross and produce one child
+            parent[cross_points] = generation[i_, cross_points] # cross and produce one child
         return parent
 
     def mutate(self, child):
@@ -60,13 +60,13 @@ class GeneticAlgorithm(object):
         return child
 
     def evolve(self, fitness):
-        pop = self.select(fitness)
-        pop_copy = pop.copy()
-        for parent in pop:
-            child = self.crossover(parent, pop_copy)
+        generation = self.select(fitness)
+        generation_copy = generation.copy()
+        for parent in generation:
+            child = self.crossover(parent, generation_copy)
             child = self.mutate(child)
             parent[:] = child
-        self.pop = pop
+        self.generation = generation
 
 class Line(object):
     def __init__(self, no_moves, point_b, point_a, obstacle_line):
