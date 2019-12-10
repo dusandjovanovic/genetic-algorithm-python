@@ -15,7 +15,7 @@ mutation_rate = 0.0001
 obstacle_line = numpy.array([[5, 4], [5, 9]])
 
 plot_config_toolbar = "None"
-plot_config_font = {'family': 'normal', 'weight': 'bold', 'size': 7}
+plot_config_font = {'family': 'DejaVu Sans', 'weight': 'bold', 'size': 7}
 
 class GeneticAlgorithm(object):
     def __init__(self, dna_size, dna_bound, cross_rate, mutation_rate, no_chromosomes):
@@ -91,7 +91,7 @@ class Line(object):
         plot.plot(lines_x.T, lines_y.T, c=(plot_colors.to_rgba("grey", alpha=0.5)))
         plot.xlim((-5, 15))
         plot.ylim((-5, 15))
-        plot.pause(0.01)
+        plot.pause(0.5)
 
 def main():
     try:
