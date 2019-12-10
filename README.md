@@ -122,4 +122,4 @@ def mutate(self, child):
     return child
 ```
 
-Svaki novonastali hromozom može ali ne mora da prodje kroz proces mutacije. Nakon formiranja novog hromozoma po meri mutacije algoritma, neke od vrednosti uokviru deteta evoluiraju u granicama `dna_bound`.
+Svaki novonastali hromozom može ali ne mora da prodje kroz proces mutacije. Nakon formiranja novog hromozoma po meri mutacije algoritma, neke od vrednosti u okviru deteta evoluiraju u granicama `dna_bound`.
