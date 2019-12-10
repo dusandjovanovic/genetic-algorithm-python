@@ -91,7 +91,7 @@ class Line(object):
         plot.plot(lines_x.T, lines_y.T, c=(plot_colors.to_rgba("grey", alpha=0.5)))
         plot.xlim((-5, 15))
         plot.ylim((-5, 15))
-        plot.pause(0.5)
+        plot.pause(0.02)
 
 def main():
     try:
