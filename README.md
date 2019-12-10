@@ -56,7 +56,7 @@ Ovo je polazna inicijalizacija i zadužena je za formiranje prve generacije. Gen
 
 ### Kodiranje hromozoma
 
-Hromozom se kodira sa `2 x no_moves` **pomeraja u prostoru** gde je svaki realan broj i realtivan u odnosu na prethodni pomeraj. Privh `no_moves` pomeraja je po x-osi, a isto toliko preostalih je po y-osi. Hromozom, prema tome, opisuje sve tačke koje čine jednu liniju u 2d prostoru, svaka od tačaka može i ne mora da bude skretanje linije. Neophodno je konvertovati pomeraje kojima je kodiran hromozom u stvarne tačke.
+Hromozom se kodira sa `2 x no_moves` **pomeraja u prostoru** gde je svaki realan broj i realtivan u odnosu na prethodni pomeraj. Privh `no_moves` pomeraja je po x-osi, a isto toliko preostalih je po y-osi. Hromozom, prema tome, opisuje sve tačke koje čine jednu liniju u 2d-prostoru, svaka od tačaka može i ne mora da bude skretanje linije. Neophodno je konvertovati pomeraje kojima je kodiran hromozom u stvarne tačke.
 
 ```python
 self.generation[0] = [1, 1, 0, 1, 1, 0, 0, ...] [0:512]
@@ -155,7 +155,7 @@ chromosome: ([0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1,
        0, 1, 1, 1, 1, 1])
 ```
 
-Na kraju algoritma, i-ti hromozom iz poslednje generacije izgleda drugačije. Linija koja predstavlja evoluirani hromozom je validna s obzirom da ne seče preprečnu liniju, takodje je put izmedju polazne i krajnjne tačke znatno kraći. Vrednost dobrote je naravno znatno veća.
+Na kraju algoritma, i-ti hromozom iz poslednje generacije izgleda drugačije. Linija koja predstavlja evoluirani hromozom je validna s obzirom da ne seče preprečnu liniju, takodje je put izmedju polazne i krajnjne tačke znatno kraći. Vrednost dobrote hromozoma je očekivano veća u poredjenju sa istim na početku algoritma.
 
 ```json
 chromosome: ([0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1,
