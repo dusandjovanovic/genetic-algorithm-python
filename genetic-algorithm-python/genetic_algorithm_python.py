@@ -3,30 +3,30 @@ import matplotlib.pyplot as plot
 
 no_moves = 256
 no_generations = 128
+no_chromosomes = 100
 
 dna_size = no_moves * 2
-dna_bound = [0, 1]
+dna_bound = [0, 2]
 
 cross_rate = 0.9
 mutation_rate = 0.0001
-pop_size = 100
 
 point_a = [0, 5]
 point_b = [10, 5]
 obstacle_line = numpy.array([[5, 5], [5, 8]])
 
 class GeneticAlgorithm(object):
-    def __init__(self, dna_size, dna_bound, cross_rate, mutation_rate, pop_size):
+    def __init__(self, dna_size, dna_bound, cross_rate, mutation_rate, no_chromosomes):
         self.dna_size = dna_size
-        dna_bound[1] += 1
         self.dna_bound = dna_bound
         self.cross_date = cross_rate
         self.mutation_rate = mutation_rate
-        self.pop_size = pop_size
+        self.no_chromosomes = no_chromosomes
 
-        self.pop = numpy.random.randint(*dna_bound, size = (pop_size, dna_size))
+        self.pop = numpy.random.randint(*dna_bound, size = (no_chromosomes, dna_size))
 
-    def dna_to_product(self, dna, no_moves, point_a):
+    def dna_to_product(self, no_moves, point_a):
+        dna = self.pop
         pop = (dna - 0.5) / 2
         pop[:, 0], pop[:, no_moves] = point_a[0], point_a[1]
         lines_x = numpy.cumsum(pop[:, :no_moves], axis = 1)
@@ -43,12 +43,12 @@ class GeneticAlgorithm(object):
         return fitness
 
     def select(self, fitness):
-        index = numpy.random.choice(numpy.arange(self.pop_size), size = self.pop_size, replace = True, p = fitness / fitness.sum())
+        index = numpy.random.choice(numpy.arange(self.no_chromosomes), size = self.no_chromosomes, replace = True, p = fitness / fitness.sum())
         return self.pop[index]
 
     def crossover(self, parent, pop):
-        if numpy.random.randint(0, self.pop_size, size = 1):
-            i_ = numpy.random.randint(0, self.pop_size, size = 1)
+        if numpy.random.randint(0, self.no_chromosomes, size = 1):
+            i_ = numpy.random.randint(0, self.no_chromosomes, size = 1)
             cross_points = numpy.random.randint(0, 2, self.dna_size).astype(numpy.bool)
             parent[cross_points] = pop[i_, cross_points]
         return parent
@@ -87,12 +87,12 @@ class Line(object):
         plot.ylim((-5, 15))
         plot.pause(0.01)
 
-algorithm = GeneticAlgorithm(dna_size = dna_size, dna_bound = dna_bound, cross_rate = cross_rate, mutation_rate = mutation_rate, pop_size = pop_size)
+algorithm = GeneticAlgorithm(dna_size = dna_size, dna_bound = dna_bound, cross_rate = cross_rate, mutation_rate = mutation_rate, no_chromosomes = no_chromosomes)
 
 line = Line(no_moves = no_moves, point_b = point_b, point_a = point_a, obstacle_line = obstacle_line)
 
 for generation in range(no_generations):
-    x, y = algorithm.dna_to_product(algorithm.pop, no_moves, point_a)
+    x, y = algorithm.dna_to_product(no_moves, point_a)
     fitness = algorithm.get_fitness(x, y, point_b, obstacle_line)
 
     algorithm.evolve(fitness)
