@@ -3,13 +3,13 @@
 **1. Predlog problema:**
 Nalaženje što je moguće kraće rute izmedju dve tačke u dvodimenzionalnom prostoru. Ulazni parametri su koordinate polazne i krajnje tačke, kao i koordinate linije koja se nalazi izmedju tačaka i koju treba izbeći. Zadatak se sastoji u generisanju skupa linija (ruta) koje imaju pomenute tačke kao polazne i krajnje, a pritom linije ne seču liniju - ona predstavlja prepreku.
 
-**2. Problem za primenu genetskog algoritma**
+**2. Problem za primenu genetskog algoritma:**
 Osnovni problem je u činjenici da dvodimenzionalni prostor može da bude jako širok i da postoji veliki broj mogučih linija koje spajaju dve tačke i ispunjavaju uslov izbegavanja preprečne linije. Genetskim algoritmom se polazi od nasumično generisanog skupa linija (ruta) i napredovanjem generacija se očekuje dobijanje što je moguće efikasnijih putanja izmedju tačaka. Treba voditi računa da svaka putanja ispunjava uslov izbegavanja preprečne linije izmedju tačaka.
 
-**3. Implementacija genetskog algoritma**
+**3. Implementacija genetskog algoritma:**
 Za implementaciju algoritma koriste se samo osnovne biblioteke Python okruženja. S obzirom na složenost problema nije neophodno koristiti open-source biblioteke. Predstavljanje DNA-a, kao i sve funkcije preklapanja i mutiranja su izgradjene od osnovnih biblioteka što dozvoljava veću fleksibilnost.
 
-**3.1. Parametri genetskog algoritma**
+**3.1. Parametri genetskog algoritma:**
 Svi ulazni argumenti algoritma su parametrizovani.
 1. *no_moves* - najveći broj dozvoljenih tačaka/skretanja svake linije (256)
 3. *no_chromosomes* - broj hromozoma generacija (100)
@@ -25,7 +25,7 @@ Na slikama se može videti napredovanje algoritma. Polazna generacija je skup na
 
 [screenshot_algotithm_start]: metadata/algorithm-start.jpg
 
-U konzolnom prozoru se nakon formiranja nove generacije prikazuje i *fitness* najbolje jedinke. Može se primetiti da je napredovanje najosetnije u početnim iteracijama algoritma, vremenom stagnira.
+U konzolnom prozoru se nakon formiranja nove generacije prikazuje i **fitness** najbolje jedinke. Može se primetiti da je napredovanje najosetnije u početnim iteracijama algoritma, vremenom stagnira.
 
 ![alt text][screenshot_algotithm_end]
 
@@ -52,7 +52,7 @@ self.pop = numpy.random.randint(*dna_bound, size = (no_chromosomes, dna_size))
 Ovo je polazna inicijalizacija i zadužena je za formiranje prve generacije. Generacija ima `no_chromosomes` elemenata od kojih svaki predstavlja niz od `no_moves` (x,y) tačaka u prostoru koje formiraju jednu liniju. U svakom trenutku se pristupa generaciji preko atributa `self.pop`.
 
 ### Kodiranje hromozoma
-Hromozom se kodira sa `2 x no_moves` *pomeraja u prostoru* gde je svaki realan broj i realtivan u odnosu na prethodni pomeraj. Privh `no_moves` pomeraja je po x-osi, a isto toliko preostalih je po y-osi. Hromozom, prema tome, opisuje sve tačke koje čine jednu liniju u 2d prostoru, svaka od tačaka može i ne mora da bude skretanje linije. Neophodno je konvertovati pomeraje kojima je kodiran hromozom u stvarne tačke.
+Hromozom se kodira sa `2 x no_moves` **pomeraja u prostoru** gde je svaki realan broj i realtivan u odnosu na prethodni pomeraj. Privh `no_moves` pomeraja je po x-osi, a isto toliko preostalih je po y-osi. Hromozom, prema tome, opisuje sve tačke koje čine jednu liniju u 2d prostoru, svaka od tačaka može i ne mora da bude skretanje linije. Neophodno je konvertovati pomeraje kojima je kodiran hromozom u stvarne tačke.
 
 ```python
 self.pop[0] = [1, 1, 0, 1, 1, 0, 0, ...] [0:512]
@@ -61,12 +61,12 @@ self.pop[99] = [0, 1, 1, 1, 1, 0, ...] [0:512]
 ```
 
 ### Iscrtavanje linija i metoda `dna_to_product`
-Ova metoda koristi se za konverziju svakog hromozoma u jednu liniju 2d-prostora. Neophodno je sve *pomeraje kojima je hromozom kodiran* sumirati i kao rezultat *sklopiti niz koordinata*. Ovo podrazumeva generisanje svih x/y tačaka a zatim i prosledjivanje istih metodi pomoćne klase `Line.plotting` koja će iscrtati sve tačke u prostoru. Povratne vrednosti su `lines_x` i `lines_y` matrice, svaki od redova(i) odgovara jednom hromozomu i sadrži niz svih pomeraja i-tog hromozoma prevedenih u koordinate.
+Ova metoda koristi se za konverziju svakog hromozoma u jednu liniju 2d-prostora. Neophodno je sve **pomeraje kojima je hromozom kodiran** sumirati i kao rezultat **sklopiti niz koordinata**. Ovo podrazumeva generisanje svih x/y tačaka a zatim i prosledjivanje istih metodi pomoćne klase `Line.plotting` koja će iscrtati sve tačke u prostoru. Povratne vrednosti su `lines_x` i `lines_y` matrice, svaki od redova(i) odgovara jednom hromozomu i sadrži niz svih pomeraja i-tog hromozoma prevedenih u koordinate.
 
 ### Mera dobrote i metoda `get_fitness`
 Rezultat prethodne metode, odnosno nizovi koordinata `lines_x` i `lines_y` odgovaraju svakom hromozomu i ima ih ukupno `no_chromosomes`. Treba izračunati meru dobrote svakog od njih. Proces se svodi na nalaženje dobrote po principu udaljenosti od krajnje tačke. Uzimaju se u obzir krajnje x/y koordinate svakog hromozoma i meri njihova udaljenost od referentne tačke koju treba dostići.
 
-Takodje, u početku postoje hromozomi koji su nasumično generisani i *ne odgovaraju uslovu tako što seku preprečnu liniju*. Neophodno je označiti koje linije nisu valjane. Svi hromozomi koji nisu valjani se označavaju jako malo mdobrotom od `1e-6`.
+Takodje, u početku postoje hromozomi koji su nasumično generisani i **ne odgovaraju uslovu tako što seku preprečnu liniju**. Neophodno je označiti koje linije nisu valjane. Svi hromozomi koji nisu valjani se označavaju jako malo mdobrotom od `1e-6`.
 
 ```python
 def get_fitness(self, lines_x, lines_y, point_b, obstacle_line):
@@ -77,3 +77,42 @@ def get_fitness(self, lines_x, lines_y, point_b, obstacle_line):
 Kao što se može videti, dobrota se računa na osnovu udaljenosti izmedju krajnje tačke linije i referentne odredišne tačke u prostoru po dobro poznatoj formuli. Ovakvom merom dobrote će hromozomi, odnosno linije koje predstavljaju, težiti odredišnoj tački kroz generacije.
 
 ### Selekcija hromozoma i metoda `select`
+Pomoćna metoda koja se koristi u procesu evoluiranja. Potrebno je za svaki hromozom izabrati indeks roditelja. Verovatnoća izbora roditelja raste srazmerno njegovoj dobroti.
+
+### Evoluiranje i metoda `evolve`
+
+```python
+def evolve(self, fitness):
+    pop = self.select(fitness)
+    pop_copy = pop.copy()
+    for parent in pop:
+        child = self.crossover(parent, pop_copy)
+        child = self.mutate(child)
+        parent[:] = child
+    self.pop = pop
+```
+
+### Preklapanje jediniki i metoda `crossover`
+
+```python
+def crossover(self, parent, pop):
+    if numpy.random.randint(0, self.no_chromosomes, size = 1):
+        i_ = numpy.random.randint(0, self.no_chromosomes, size = 1) # select another individual from pop
+        cross_points = numpy.random.randint(0, 2, self.dna_size).astype(numpy.bool) # choose crossover points
+        parent[cross_points] = pop[i_, cross_points] # cross and produce one child
+    return parent
+```
+
+Preklapanje, odnosno *crossover* sa izabranim roditeljem svodi se na nekoliko koraka. Prvo, treba izabrati nasumično hromozom sa kojim će se vršiti preklapanje. Zatim, nasumično generisati tačke preklapanja kao `boolean` vrednosti `True/False`. `True` vrednosti u nizu tačaka će značiti uzimanje vrednosti indeksa nasumično izabrane jedinke, ostale vrednosti u roditelju preostaju iste.
+
+### Mutiranje jediniki i metoda `mutate`
+
+```python
+def mutate(self, child):
+    for point in range(self.dna_size):
+        if numpy.random.rand() < self.mutation_rate:
+            child[point] = numpy.random.randint(*self.dna_bound)
+    return child
+```
+
+Svaki novonastali hromozom može ali ne mora da prodje kroz proces mutacije. Nakon formiranja novog hromozoma po meri mutacije algoritma, neke od vrednosti uokviru deteta evoluiraju u granicama `dna_bound`.

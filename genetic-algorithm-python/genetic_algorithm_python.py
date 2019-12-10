@@ -48,9 +48,9 @@ class GeneticAlgorithm(object):
 
     def crossover(self, parent, pop):
         if numpy.random.randint(0, self.no_chromosomes, size = 1):
-            i_ = numpy.random.randint(0, self.no_chromosomes, size = 1)
-            cross_points = numpy.random.randint(0, 2, self.dna_size).astype(numpy.bool)
-            parent[cross_points] = pop[i_, cross_points]
+            i_ = numpy.random.randint(0, self.no_chromosomes, size = 1)  # select another individual from pop
+            cross_points = numpy.random.randint(0, 2, self.dna_size).astype(numpy.bool)  # choose crossover points
+            parent[cross_points] = pop[i_, cross_points] # cross and produce one child
         return parent
 
     def mutate(self, child):
