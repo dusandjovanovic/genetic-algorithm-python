@@ -131,7 +131,8 @@ Svaki novonastali hromozom može ali ne mora da mutira nakon neobaveznog koraka 
 Primer napredovanja hromozoma će biti prikazan u nastavku. Biće razmatran i-ti hromozom prve i poslednje generacije. U prilogu se može videti kodirani hromozom na početku algoritma, ovo je nasumično generisani niz pomeraja. Prva polovina vrednosti se odnosi na pomeraje po x-osi, ostatak na odgovarajuće pomeraje po y-osi.
 
 ```json
-"chromosome": [0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1,
+{
+    "chromosome": [0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1,
        1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1,
        0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1,
        0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0,
@@ -155,12 +156,14 @@ Primer napredovanja hromozoma će biti prikazan u nastavku. Biće razmatran i-ti
        1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0,
        1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1,
        0, 1, 1, 1, 1, 1]
+}
 ```
 
 Na kraju algoritma, i-ti hromozom iz poslednje generacije izgleda drugačije. Linija koja predstavlja evoluirani hromozom je validna s obzirom da ne seče preprečnu liniju, takodje je put izmedju polazne i krajnjne tačke znatno kraći. Vrednost dobrote hromozoma je očekivano veća u poredjenju sa istim na početku algoritma.
 
 ```json
-"chromosome": [0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1,
+{
+    "chromosome": [0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1,
        0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0,
        0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1,
        1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0,
@@ -184,4 +187,5 @@ Na kraju algoritma, i-ti hromozom iz poslednje generacije izgleda drugačije. Li
        0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0,
        0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1,
        1, 0, 1, 1, 0, 0]
+}
 ```
