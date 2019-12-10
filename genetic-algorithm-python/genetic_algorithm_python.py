@@ -19,7 +19,7 @@ class GeneticAlgorithm(object):
     def __init__(self, dna_size, dna_bound, cross_rate, mutation_rate, no_chromosomes):
         self.dna_size = dna_size
         self.dna_bound = dna_bound
-        self.cross_date = cross_rate
+        self.cross_rate = cross_rate
         self.mutation_rate = mutation_rate
         self.no_chromosomes = no_chromosomes
 
@@ -47,7 +47,7 @@ class GeneticAlgorithm(object):
         return self.generation[index]
 
     def crossover(self, parent, generation):
-        if numpy.random.randint(0, self.no_chromosomes, size = 1):
+        if numpy.random.rand() < self.cross_rate:
             i_ = numpy.random.randint(0, self.no_chromosomes, size = 1)  # select another individual from generation
             cross_points = numpy.random.randint(0, 2, self.dna_size).astype(numpy.bool)  # choose crossover points
             parent[cross_points] = generation[i_, cross_points] # cross and produce one child
@@ -94,11 +94,9 @@ line = Line(no_moves = no_moves, point_b = point_b, point_a = point_a, obstacle_
 for generation in range(no_generations):
     x, y = algorithm.dna_to_product(no_moves, point_a)
     fitness = algorithm.get_fitness(x, y, point_b, obstacle_line)
-
     algorithm.evolve(fitness)
 
-    print('> Generation: ', generation, ' | Highest fitness: ', fitness.max())
-
+    print('generation_', generation, ' | max(fitness): ', fitness.max())
     line.plotting(x, y)
 
 plot.ioff()

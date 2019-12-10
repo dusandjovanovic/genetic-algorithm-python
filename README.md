@@ -72,7 +72,7 @@ Ova metoda koristi se za konverziju svakog hromozoma u jednu liniju 2d-prostora.
 
 Rezultat prethodne metode, odnosno nizovi koordinata `lines_x` i `lines_y` odgovaraju svakom hromozomu i ima ih ukupno `no_chromosomes`. Treba izračunati meru dobrote svakog od njih. Proces se svodi na nalaženje dobrote po principu udaljenosti od krajnje tačke. Uzimaju se u obzir krajnje x/y koordinate svakog hromozoma i meri njihova udaljenost od referentne tačke koju treba dostići.
 
-Takodje, u početku postoje hromozomi koji su nasumično generisani i **ne odgovaraju uslovu tako što seku preprečnu liniju**. Neophodno je označiti koje linije nisu valjane. Svi hromozomi koji nisu valjani se označavaju jako malo mdobrotom od `1e-6`.
+Takodje, u početku postoje hromozomi koji su nasumično generisani i **ne odgovaraju uslovu tako što seku preprečnu liniju**. Neophodno je označiti koje linije nisu valjane. Svi hromozomi koji nisu valjani se označavaju jako malom dobrotom od `1e-6`.
 
 ```python
 def get_fitness(self, lines_x, lines_y, point_b, obstacle_line):
@@ -103,14 +103,14 @@ def evolve(self, fitness):
 
 ```python
 def crossover(self, parent, generation):
-    if numpy.random.randint(0, self.no_chromosomes, size = 1):
+    if numpy.random.rand() < self.cross_rate:
         i_ = numpy.random.randint(0, self.no_chromosomes, size = 1) # select another individual from generation
         cross_points = numpy.random.randint(0, 2, self.dna_size).astype(numpy.bool) # choose crossover points
         parent[cross_points] = generation[i_, cross_points] # cross and produce one child
     return parent
 ```
 
-Preklapanje, odnosno *crossover* sa izabranim roditeljem svodi se na nekoliko koraka. Prvo, treba izabrati nasumično hromozom sa kojim će se vršiti preklapanje. Zatim, nasumično generisati tačke preklapanja kao `boolean` vrednosti `True/False`. `True` vrednosti u nizu tačaka će značiti uzimanje vrednosti indeksa nasumično izabrane jedinke, ostale vrednosti u roditelju preostaju iste.
+Preklapanje, odnosno *crossover* sa izabranim roditeljem svodi se na nekoliko koraka. Prvo, treba izabrati nasumično hromozom sa kojim će se vršiti preklapanje. Zatim, nasumično generisati tačke preklapanja kao `boolean` vrednosti `True/False`. `True` vrednosti u nizu tačaka će značiti uzimanje vrednosti indeksa nasumično izabrane jedinke, ostale vrednosti u roditelju preostaju iste. Na kraju, do preklapanje ne mora da dodje, roditelj će biti nepromenjen u broju slučajeva srazmernom meri preklapanja `cross_rate`.
 
 ### Mutiranje jediniki i metoda `mutate`
 
@@ -122,4 +122,4 @@ def mutate(self, child):
     return child
 ```
 
-Svaki novonastali hromozom može ali ne mora da prodje kroz proces mutacije. Nakon formiranja novog hromozoma po meri mutacije algoritma, neke od vrednosti u okviru deteta evoluiraju u granicama `dna_bound`.
+Svaki novonastali hromozom može ali ne mora da mutira nakon neobaveznog koraka preklapanja. Nakon formiranja novog hromozoma po meri mutacije algoritma, neke od vrednosti u okviru deteta evoluiraju u granicama `dna_bound`. Na kraju, do mutiranja jedinke ne mora da dodje, jedinka može ostati nepromenjena u broju slučajeva srazmernom meri mutiranja `mutation_rate`.
