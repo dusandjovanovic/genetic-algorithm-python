@@ -1,5 +1,6 @@
 import numpy
 import matplotlib.pyplot as plot
+import matplotlib.colors as plot_colors
 
 no_moves = 256
 no_generations = 128
@@ -11,9 +12,10 @@ dna_bound = [0, 2]
 cross_rate = 0.9
 mutation_rate = 0.0001
 
-point_a = [0, 5]
-point_b = [10, 5]
-obstacle_line = numpy.array([[5, 5], [5, 8]])
+obstacle_line = numpy.array([[5, 4], [5, 9]])
+
+plot_config_toolbar = "None"
+plot_config_font = {'family': 'normal', 'weight': 'bold', 'size': 7}
 
 class GeneticAlgorithm(object):
     def __init__(self, dna_size, dna_bound, cross_rate, mutation_rate, no_chromosomes):
@@ -76,28 +78,51 @@ class Line(object):
         self.obstacle_line = obstacle_line
 
         plot.ion()
+        plot.rcParams['toolbar'] = plot_config_toolbar
+        plot.rc('font', **plot_config_font)
+        figure = plot.figure()
+        figure.canvas.set_window_title('Genetic algorithm 2D-View')
 
     def plotting(self, lines_x, lines_y):
         plot.cla()
-        plot.scatter(*self.point_b, s = 100)
-        plot.scatter(*self.point_a, s = 100)
-        plot.plot(self.obstacle_line[:, 0], self.obstacle_line[:, 1], lw=3, c='k')
-        plot.plot(lines_x.T, lines_y.T, c='k')
+        plot.scatter(*self.point_b, s = 100, c="blue")
+        plot.scatter(*self.point_a, s = 100, c="red")
+        plot.plot(self.obstacle_line[:, 0], self.obstacle_line[:, 1], lw=3, c='black')
+        plot.plot(lines_x.T, lines_y.T, c=(plot_colors.to_rgba("grey", alpha=0.5)))
         plot.xlim((-5, 15))
         plot.ylim((-5, 15))
         plot.pause(0.01)
 
-algorithm = GeneticAlgorithm(dna_size = dna_size, dna_bound = dna_bound, cross_rate = cross_rate, mutation_rate = mutation_rate, no_chromosomes = no_chromosomes)
+def main():
+    try:
+        print("Input starting point(x, y), each number in new line.")
+        x = float(input())
+        y = float(input())
+        point_a = [x, y]
 
-line = Line(no_moves = no_moves, point_b = point_b, point_a = point_a, obstacle_line = obstacle_line)
+        print("Input ending point(x, y), each number in new line.")
+        x = float(input())
+        y = float(input())
+        point_b = [x, y]
+    except:
+        point_a = [0, 5]
+        point_b = [10, 7.5]
+        print("Wrong input! Defaults are loaded.")
 
-for generation in range(no_generations):
-    x, y = algorithm.dna_to_product(no_moves, point_a)
-    fitness = algorithm.get_fitness(x, y, point_b, obstacle_line)
-    algorithm.evolve(fitness)
+    algorithm = GeneticAlgorithm(dna_size = dna_size, dna_bound = dna_bound, cross_rate = cross_rate, mutation_rate = mutation_rate, no_chromosomes = no_chromosomes)
 
-    print('generation_', generation, ' | max(fitness): ', fitness.max())
-    line.plotting(x, y)
+    line = Line(no_moves = no_moves, point_b = point_b, point_a = point_a, obstacle_line = obstacle_line)
 
-plot.ioff()
-plot.show()
+    for generation in range(no_generations):
+        x, y = algorithm.dna_to_product(no_moves, point_a)
+        fitness = algorithm.get_fitness(x, y, point_b, obstacle_line)
+        algorithm.evolve(fitness)
+
+        print('generation_', generation, ' | max(fitness): ', fitness.max())
+        line.plotting(x, y)
+
+    plot.ioff()
+    plot.show()
+  
+if __name__== "__main__":
+  main()
